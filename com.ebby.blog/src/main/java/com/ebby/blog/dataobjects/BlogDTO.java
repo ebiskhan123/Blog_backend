@@ -10,10 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
-@XmlRootElement 
-@Data @Document(collection = "Publication")
+@XmlRootElement
+@Data
+@Document(collection = "Publication")
 public class BlogDTO {
-	
+
 	@Id
 	private String id;
 	private String content;

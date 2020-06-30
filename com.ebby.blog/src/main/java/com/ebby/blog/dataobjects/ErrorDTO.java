@@ -1,7 +1,5 @@
 package com.ebby.blog.dataobjects;
 
-import java.util.Date;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 import lombok.Builder;
@@ -10,9 +8,10 @@ import lombok.Data;
 @XmlRootElement
 @Data
 @Builder
-public class ResponseDTO {
+public class ErrorDTO {
 
-	private String status;
-	private Date createTime;
-	private String id;
+	private String message;
+	private int code;
+	private String uri;
+
 }
