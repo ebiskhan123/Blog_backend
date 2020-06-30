@@ -18,20 +18,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ebby.blog.dataobjects.BlogDTO;
-import com.ebby.blog.repository.BlogRepository;
+import com.ebby.blog.dataobjects.ResponseDTO;
+import com.ebby.blog.services.ContentService;
 
 @Service
 @Path("/api/content")
 public class ContentResource {
 
 	@Autowired
-	BlogRepository blogReposiory;
+	ContentService contentService;
+	
+	
 
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/blog")
 	@GET
 	public Response getTest() {
-		List<BlogDTO> result = blogReposiory.findAll();
+		List<BlogDTO> result = contentService.getAllBlogs();
 		Response response = Response.ok().entity(result).build();
 		return response;
 	}
@@ -42,9 +45,9 @@ public class ContentResource {
 	@POST
 	public Response addNewBlog(@RequestBody BlogDTO body, @Context UriInfo uriinfo) {
 
-		blogReposiory.insert(body);
-		URI uri = uriinfo.getAbsolutePathBuilder().path(body.getId()).build();
-		Response response = Response.created(uri).entity(body).build();
+		ResponseDTO responseDTO =  contentService.addBlog(body);
+		URI uri = uriinfo.getAbsolutePathBuilder().path(responseDTO.getId()).build();
+		Response response = Response.created(uri).entity(responseDTO).build();
 		return response;
 	}
 
