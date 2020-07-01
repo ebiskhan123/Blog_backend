@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ebby.blog.dataobjects.BlogDTO;
+import com.ebby.blog.exception.DataNotFoundException;
 import com.ebby.blog.repository.BlogRepository;
 
 @Service
@@ -34,7 +35,7 @@ public class ContentService {
 		return result;
 	}
 
-	public BlogDTO updateBlog(BlogDTO body,String Id) throws Exception {
+	public BlogDTO updateBlog(BlogDTO body,String Id) {
 		Date current = new Date();
 		body.setLastUpdatedDate(current);
 		
@@ -43,7 +44,7 @@ public class ContentService {
 			body.setId(Id);
 			result = blogRepository.save(body);
 		}
-		else throw(new Exception("No Blog exists with this ID"));
+		else throw new DataNotFoundException("No Blog exists with this ID");
 		
 		return result;
 	}

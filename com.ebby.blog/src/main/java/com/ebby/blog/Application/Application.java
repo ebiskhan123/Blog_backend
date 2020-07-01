@@ -8,8 +8,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import com.ebby.blog.repository.BlogRepository;
 
 @SpringBootApplication
-@ComponentScan(basePackages = { "com.ebby.blog.config", "com.ebby.blog.dataobjects", "com.ebby.blog.endpoints",
-		"com.ebby.blog.repository","com.ebby.blog.Application","com.ebby.blog.services" })
+@ComponentScan(basePackages = { "com.ebby.blog.*"})
 @EnableMongoRepositories(basePackageClasses = BlogRepository.class)
 public class Application {
 

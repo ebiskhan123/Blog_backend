@@ -76,7 +76,7 @@ public class ContentResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/blog/{id}")
 	@PUT
-	public Response updateContent(@RequestBody BlogDTO body, @Context UriInfo uriinfo, @PathParam("id") String id) throws Exception {
+	public Response updateContent(@RequestBody BlogDTO body, @Context UriInfo uriinfo, @PathParam("id") String id) {
 
 		BlogDTO blogDTO =  contentService.updateBlog(body,id);
 		ResponseDTO responseDTO = ResponseDTO.builder()
