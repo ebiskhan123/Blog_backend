@@ -1,9 +1,11 @@
 package com.ebby.blog.service.resource;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -96,6 +98,29 @@ public class ContentResource {
 		return response;
 	}
 
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/blog/{id}")
+	@DELETE
+	public Response deleteContent(@RequestBody BlogDTO body, @Context UriInfo uriinfo, @PathParam("id") String id) {
+
+		String operation =  contentService.deleteBlog(body,id);
+		ResponseDTO responseDTO = ResponseDTO.builder()
+				.createTime(new Date())
+				.status(operation)
+				.id(id)
+				.build();
+		
+		URI uri = uriinfo.getAbsolutePathBuilder()
+				.path(id)
+				.build();
+		
+		Response response = Response.created(uri)
+				.entity(responseDTO)
+				.build();
+		
+		return response;
+	}
 	
 	
 	

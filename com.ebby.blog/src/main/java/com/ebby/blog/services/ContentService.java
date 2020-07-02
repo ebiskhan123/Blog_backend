@@ -44,9 +44,20 @@ public class ContentService {
 			body.setId(Id);
 			result = blogRepository.save(body);
 		}
-		else throw new DataNotFoundException("No Blog exists with this ID");
+		else throw new DataNotFoundException("No Blog exists with this ID so unable to update");
 		
 		return result;
+	}
+
+	public String deleteBlog(BlogDTO body, String id) {
+			
+		if(blogRepository.existsById(id)) {
+			body.setId(id);
+			blogRepository.deleteById(id);
+		}
+		else throw new DataNotFoundException("No Blog exists with this ID sounable to delete a blog not present");
+		
+		return "deleted";
 	}
 
 }
