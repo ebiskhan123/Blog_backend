@@ -31,20 +31,16 @@ public class ContentResource {
 
 	@Autowired
 	ContentService contentService;
-	
-	
 
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/blog")
 	@GET
 	public Response getTest() {
-		
+
 		List<BlogDTO> result = contentService.getAllBlogs();
-		
-		Response response = Response.ok()
-				.entity(result)
-				.build();
-		
+
+		Response response = Response.accepted().entity(result).build();
+
 		return response;
 	}
 
@@ -55,46 +51,31 @@ public class ContentResource {
 	public Response addNewBlog(@RequestBody BlogDTO body, @Context UriInfo uriinfo) {
 
 		BlogDTO blogDTO = contentService.addBlog(body);
-		
-		ResponseDTO responseDTO = ResponseDTO.builder()
-				.createTime(blogDTO.getPublishedDate())
-				.status("created")
-				.id(blogDTO.getId())
-				.build();
-		
-		URI uri = uriinfo
-				.getAbsolutePathBuilder()
-				.path(responseDTO.getId())
-				.build();
-		
-		Response response = Response.created(uri)
-				.entity(responseDTO)
-				.build();
-		
+
+		ResponseDTO responseDTO = ResponseDTO.builder().createTime(blogDTO.getPublishedDate()).status("created")
+				.id(blogDTO.getId()).build();
+
+		URI uri = uriinfo.getAbsolutePathBuilder().path(responseDTO.getId()).build();
+
+		Response response = Response.created(uri).entity(responseDTO).build();
+
 		return response;
 	}
-	
+
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/blog/{id}")
 	@PUT
 	public Response updateContent(@RequestBody BlogDTO body, @Context UriInfo uriinfo, @PathParam("id") String id) {
 
-		BlogDTO blogDTO =  contentService.updateBlog(body,id);
-		ResponseDTO responseDTO = ResponseDTO.builder()
-				.createTime(blogDTO.getLastUpdatedDate())
-				.status("updated")
-				.id(blogDTO.getId())
-				.build();
-		
-		URI uri = uriinfo.getAbsolutePathBuilder()
-				.path(blogDTO.getId())
-				.build();
-		
-		Response response = Response.created(uri)
-				.entity(responseDTO)
-				.build();
-		
+		BlogDTO blogDTO = contentService.updateBlog(body, id);
+		ResponseDTO responseDTO = ResponseDTO.builder().createTime(blogDTO.getLastUpdatedDate()).status("updated")
+				.id(blogDTO.getId()).build();
+
+		URI uri = uriinfo.getAbsolutePathBuilder().path(blogDTO.getId()).build();
+
+		Response response = Response.ok(uri).entity(responseDTO).build();
+
 		return response;
 	}
 
@@ -104,25 +85,14 @@ public class ContentResource {
 	@DELETE
 	public Response deleteContent(@RequestBody BlogDTO body, @Context UriInfo uriinfo, @PathParam("id") String id) {
 
-		String operation =  contentService.deleteBlog(body,id);
-		ResponseDTO responseDTO = ResponseDTO.builder()
-				.createTime(new Date())
-				.status(operation)
-				.id(id)
-				.build();
-		
-		URI uri = uriinfo.getAbsolutePathBuilder()
-				.path(id)
-				.build();
-		
-		Response response = Response.created(uri)
-				.entity(responseDTO)
-				.build();
-		
+		String operation = contentService.deleteBlog(body, id);
+		ResponseDTO responseDTO = ResponseDTO.builder().createTime(new Date()).status(operation).id(id).build();
+
+		URI uri = uriinfo.getAbsolutePathBuilder().path(id).build();
+
+		Response response = Response.ok(uri).entity(responseDTO).build();
+
 		return response;
 	}
-	
-	
-	
-	
+
 }
