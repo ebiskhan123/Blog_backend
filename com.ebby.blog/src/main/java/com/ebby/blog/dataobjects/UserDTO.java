@@ -11,9 +11,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "users")
-public class UserDTO {
+import lombok.Builder;
+import lombok.Data;
 
+@Document(collection = "users")
+@Data
+@Builder
+public class UserDTO {
 	
 	  @Id
 	  private String id;

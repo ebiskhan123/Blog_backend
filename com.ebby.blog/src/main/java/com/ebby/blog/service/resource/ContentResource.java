@@ -18,13 +18,16 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ebby.blog.dataobjects.BlogDTO;
 import com.ebby.blog.dataobjects.ResponseDTO;
 import com.ebby.blog.services.ContentService;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Service
 @Path("/api/content")
 public class ContentResource {
@@ -44,6 +47,7 @@ public class ContentResource {
 		return response;
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/blog")

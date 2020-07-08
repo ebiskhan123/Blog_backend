@@ -8,10 +8,10 @@ import javax.ws.rs.ext.Provider;
 import com.ebby.blog.dataobjects.ErrorDTO;
 
 @Provider
-public class ExceptionMapperGeneric implements ExceptionMapper<DataNotFoundException> {
+public class ExceptionMapperGeneric implements ExceptionMapper<Throwable> {
 
 	@Override
-	public Response toResponse(DataNotFoundException ex) {
+	public Response toResponse(Throwable ex) {
 
 		ErrorDTO errorDTO = ErrorDTO.builder()
 				.message(ex.getMessage())
