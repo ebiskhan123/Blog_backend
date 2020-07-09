@@ -84,7 +84,7 @@ public class UserResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/signup")
 	@POST
-	public Response registerUser(@Valid @RequestBody UserDTO signUpRequest ,@Context UriInfo uriInfo) {
+	public Response registerUser(@RequestBody UserDTO signUpRequest ,@Context UriInfo uriInfo) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return Response.status(400)
 					.entity(ResponseDTO.builder()
